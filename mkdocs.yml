@@ -61,6 +61,9 @@ markdown_extensions:
   - admonition
   - attr_list
   - def_list
+  # md_in_html 让 <div markdown> 内部的 Markdown 被正常解析，
+  # 首页的卡片网格（grid cards）依赖它，否则会原样显示成纯文本
+  - md_in_html
   - tables
   - toc:
       permalink: true
@@ -69,6 +72,10 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.superfences
   - pymdownx.details
+  # 让 :material-xxx: 这类图标简写渲染成内联 SVG 图标
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 nav:
   - 首页: index.md
