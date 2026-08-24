@@ -1,10 +1,10 @@
 # GPGPU 软件栈中英双语文档
 
-[![Build and Deploy Docs](https://github.com/USERNAME/gpgpu-docs/actions/workflows/deploy.yml/badge.svg)](https://github.com/USERNAME/gpgpu-docs/actions/workflows/deploy.yml)
+[![Build and Deploy Docs](https://github.com/prdsdefsoul/gpgpu-docs/actions/workflows/deploy.yml/badge.svg)](https://github.com/prdsdefsoul/gpgpu-docs/actions/workflows/deploy.yml)
 
 一份面向异构计算初学者的 GPGPU 软件栈分层文档，中英双语，用 **Docs-as-Code** 方式构建与发布。
 
-**在线阅读**：https://USERNAME.github.io/gpgpu-docs/
+**在线阅读**：https://prdsdefsoul.github.io/gpgpu-docs/
 
 ## 这个项目是什么
 

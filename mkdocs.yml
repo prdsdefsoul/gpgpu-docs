@@ -1,7 +1,7 @@
 site_name: GPGPU 软件栈中英双语文档
 site_description: 一份面向异构计算初学者的 GPGPU 软件栈分层文档，中英双语，Docs-as-Code 实践
 site_author: Jiahui Li
-repo_url: https://github.com/USERNAME/gpgpu-docs
+repo_url: https://github.com/prdsdefsoul/gpgpu-docs
 edit_uri: edit/main/docs/
 
 theme:
