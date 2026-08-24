@@ -1,0 +1,76 @@
+name: Build and Deploy Docs
+
+# 触发条件：推送到 main 分支时构建并部署；
+# 对 main 的 Pull Request 只构建、不部署，用作合并前的质量门禁。
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:        # 允许在 Actions 页面手动触发
+
+# GITHUB_TOKEN 的权限：读仓库、写 Pages、申请部署身份令牌
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同一时间只允许一个部署在跑；新的推送取消排队中的旧任务
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  # ───────────────────────────────────────────────
+  # 作业一：构建 + 质量校验
+  # ───────────────────────────────────────────────
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: 安装依赖
+        run: pip install -r requirements.txt
+
+      - name: 校验示例脚本可运行
+        # 文档里引用的示例必须真的能跑通，跑不通就不给发布
+        run: |
+          pip install numpy
+          python examples/tiled_reduction.py
+
+      - name: 严格模式构建文档
+        # --strict 把死链、缺失的 nav 条目等警告升级为错误，构建直接失败
+        run: mkdocs build --strict
+
+      - name: 配置 GitHub Pages
+        if: github.event_name == 'push'
+        uses: actions/configure-pages@v5
+
+      - name: 上传构建产物
+        if: github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  # ───────────────────────────────────────────────
+  # 作业二：部署（仅 push 到 main 时执行）
+  # ───────────────────────────────────────────────
+  deploy:
+    # 只有 build 成功后才执行
+    needs: build
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 部署到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
