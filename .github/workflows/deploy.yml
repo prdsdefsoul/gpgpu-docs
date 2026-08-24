@@ -45,6 +45,12 @@ jobs:
           pip install numpy
           python examples/tiled_reduction.py
 
+      - name: 校验术语一致性
+        # 扫描全部文档：禁用译法、中英页面对等、中英术语表对等。
+        # 多语言文档最容易失守的是「同一概念在不同页面用了不同译法」，
+        # 这类问题分散在几十个文件里，人工评审发现不了，只有机器扫得动。
+        run: python tools/check_terms.py
+
       - name: 严格模式构建文档
         # --strict 把死链、缺失的 nav 条目等警告升级为错误，构建直接失败
         run: mkdocs build --strict

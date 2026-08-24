@@ -1,0 +1,54 @@
+# 术语规范 —— 文档写作用词的强制约束
+#
+# 这个文件是「单一事实来源」：术语表（docs/glossary.md）定义正确译法，
+# 这里定义哪些写法是被禁止的。check_terms.py 会在每次提交时扫描全部文档。
+#
+# 加一条规则的成本是三行 YAML；不加的代价是这个错译在未来所有文档里扩散。
+#
+# 每条规则：
+#   wrong   被禁止的写法
+#   use     应该改用什么
+#   why     为什么（写给三个月后的自己看）
+#   unless  可选。合法地包含了 wrong 的更长词汇——中文没有词边界，
+#           不给例外的话「线程组织方式」会被误判成用了「线程组」。
+
+forbidden:
+  # ── 中文侧 ──────────────────────────────────────────────
+  - wrong: 内核函数
+    use: kernel（保留英文不译）
+    why: 与操作系统的「内核态」混淆。术语表规定设备上执行的函数一律保留英文
+
+  - wrong: 线程组
+    use: 线程块
+    why: block 的统一译法是「线程块」，不使用「线程组」
+    # 中文没有词边界，子串匹配会误伤更长的词。unless 列出合法的包含情形。
+    unless: [线程组织]
+
+  - wrong: 显卡内存
+    use: 显存 / 设备内存
+    why: 口语化表述，正式文档统一用「显存」或「设备内存」
+
+  - wrong: 波前
+    use: 线程束
+    why: wavefront 与 warp 在本文档中统一译为「线程束」，不按字面译
+
+  - wrong: 中间代码
+    use: 中间表示
+    why: IR 的标准译法是「中间表示」
+
+  - wrong: 融合算子
+    use: 算子融合
+    why: 语序错误。operator fusion 是「算子融合」这个动作，不是一种算子
+
+  # ── 英文侧 ──────────────────────────────────────────────
+  - wrong: thread group
+    use: thread block
+    why: Use the term the framework itself uses
+
+  - wrong: video memory
+    use: device memory
+    why: 'The phrase "video memory" reads as graphics-era vocabulary; this is compute documentation'
+
+  - wrong: GPU memory
+    use: device memory
+    why: Keep one name for one concept across the whole site
