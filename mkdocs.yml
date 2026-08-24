@@ -1,5 +1,8 @@
 site_name: GPGPU 软件栈中英双语文档
 site_description: 一份面向异构计算初学者的 GPGPU 软件栈分层文档，中英双语，Docs-as-Code 实践
+# GitHub Pages 把站点挂在 /gpgpu-docs/ 子路径下，
+# 不设 site_url 的话语言切换器会生成 /en/ 这种根路径链接，点击 404
+site_url: https://prdsdefsoul.github.io/gpgpu-docs/
 site_author: Jiahui Li
 repo_url: https://github.com/prdsdefsoul/gpgpu-docs
 edit_uri: edit/main/docs/
