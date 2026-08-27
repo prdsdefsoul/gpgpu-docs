@@ -37,6 +37,30 @@ gpgpu-docs/
 
 每个 `xxx.md` 都有一个对应的 `xxx.en.md`，这是 `mkdocs-static-i18n` 的 **suffix 结构**：中文是默认语言，构建到站点根目录；英文构建到 `/en/` 子路径。
 
+## 日常更新流程
+
+```bash
+cd ~/jia/gpgpu-docs
+
+# 1. 起本地预览，改文件浏览器自动刷新，写作时一直开着
+.venv/bin/mkdocs serve            # → http://127.0.0.1:8000
+
+# 2. 编辑 docs/ 下的 Markdown……改完 Ctrl+C 停掉预览
+
+# 3. 本地跑一遍全部质量门禁（和 CI 跑的完全一样）
+./check.sh
+
+# 4. 绿了再提交推送
+git status                        # 先看改了哪些文件
+git add docs/stack/runtime.md     # 选出这次要提交的
+git commit -m "docs: 改写 Runtime 章节的同步语义部分"
+git push
+```
+
+推送后 GitHub Actions 自动构建部署，约 2-3 分钟后线上生效。去仓库 **Actions** 页面能看到进度。
+
+`./check.sh` 是本地门禁，内容与 CI 完全一致——**本地绿了再推，就不会出现「推上去才发现 CI 挂了」**。
+
 ## 本地开发
 
 ```bash
