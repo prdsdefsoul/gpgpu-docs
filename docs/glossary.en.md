@@ -15,6 +15,7 @@ Within this project the glossary is the **single source of truth**: when a page 
 | Runtime | 运行时 | The host-side programming interface to the device; kept in English on this site |
 | Driver API | 驱动 API | The lower-level device interface — still user-mode, not the kernel driver itself |
 | Heterogeneous computing | 异构计算 | Computing across processors of differing architectures |
+| Doorbell | doorbell | A memory-mapped register the UMD writes to signal the hardware that new commands are queued. A memory write rather than a system call, which keeps the submission path cheap |
 
 ## Execution model
 
